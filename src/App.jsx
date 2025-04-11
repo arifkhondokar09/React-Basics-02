@@ -4,46 +4,83 @@ import './App.css'
 import Bowler from "./Bowler"
 import Goals from "./Goals"
 
+import { Suspense } from "react";
+import Friends from "./Friends";
+import Comments from "./Comments" ;
 
+import Todos from "./Todos"
+import Users from "./Users"
+          
+const fetchUsers= fetch("https://jsonplaceholder.typicode.com/users").then(res=> res.json())
+
+const fetchFriends= async ()=> {
+  const res= await fetch("https://jsonplaceholder.typicode.com/users");
+  return res.json();
+}                  
+
+const fetchComments = async ()=>{
+  const res= await fetch("https://jsonplaceholder.typicode.com/comments");
+  return res.json()
+
+}
+const fetchTodos=async ()=> {
+  const res= await fetch("https://jsonplaceholder.typicode.com/todos")
+  return res.json()
+}
+const promiseTodos= fetchTodos()
+
+  const promiseComments= fetchComments()
 
 function App() {
-
+  const friendsPromise =fetchFriends()
 
 
 function HandleClick(){
-alert("i am clicked")
-};
-
-const HandleClick2 = ()=> {
-  alert(" alerttttt 2")
-}
-
-function HandleClick3(){
-  alert("Alert 3")
-}
+  alert("i am clicked")
+  };
   
-const HandleClick5= (num)=> {
-
-const num2 = num+ 10; 
-alert(num2)
-}
-
-
-const HandleClick10 = () => {
-  alert("button click10 clicked")
-}
-
-const HandleClick20 = (num)=> {
-  const newNum = num +10;
-  alert(newNum);
-}
-
-
+  const HandleClick2 = ()=> {
+    alert(" alerttttt 2")
+  }
+  
+  function HandleClick3(){
+    alert("Alert 3")
+  }
+    
+  const HandleClick5= (num)=> {
+  
+  const num2 = num+ 10; 
+  alert(num2)
+  }
+  
+  
+  const HandleClick10 = () => {
+    alert("button click10 clicked")
+  }
+  
+  const HandleClick20 = (num)=> {
+    const newNum = num +10;
+    alert(newNum);
+  }
 
   return (
     <>
 
       <h1>Vite + React</h1>
+      <Users promiseUsers={fetchUsers}></Users>
+    
+    <Suspense fallback={<h4> todos is loading....... please Wait....</h4>}><Todos promiseTodos={promiseTodos}></Todos></Suspense>
+
+    {/* <Suspense fallback={<h3>Please wait for all Comments.....</h3>}> 
+    <Comments promiseComments={promiseComments}></Comments>
+    </Suspense> */}
+
+   {/* <Suspense fallback={<h3>please wait for a while...</h3>}>
+   <Friends  friendsPromise={friendsPromise} ></Friends>
+   </Suspense> */}
+
+   
+
       <Goals></Goals>
       <Bowler></Bowler>
       <Batsman></Batsman>
