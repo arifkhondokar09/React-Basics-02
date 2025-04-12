@@ -4,12 +4,16 @@ import './App.css'
 import Bowler from "./Bowler"
 import Goals from "./Goals"
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Friends from "./Friends";
 import Comments from "./Comments" ;
 
 import Todos from "./Todos"
 import Users from "./Users"
+import Counter2 from "./Counter2"
+import ShowHide from "./ShowHide"
+
+
           
 const fetchUsers= fetch("https://jsonplaceholder.typicode.com/users").then(res=> res.json())
 
@@ -31,11 +35,16 @@ const promiseTodos= fetchTodos()
 
   const promiseComments= fetchComments()
 
-function App() {
   const friendsPromise =fetchFriends()
 
 
+  function App() {
+ 
+
 function HandleClick(){
+
+
+
   alert("i am clicked")
   };
   
@@ -63,11 +72,13 @@ function HandleClick(){
     alert(newNum);
   }
 
-  return (
+return (
     <>
-
+    <ShowHide></ShowHide>
+  <Counter2></Counter2>
       <h1>Vite + React</h1>
-      <Users promiseUsers={fetchUsers}></Users>
+
+     <Suspense fallback={<h4>User is loading...</h4>}> <Users promiseUsers={fetchUsers}></Users></Suspense>
     
     <Suspense fallback={<h4> todos is loading....... please Wait....</h4>}><Todos promiseTodos={promiseTodos}></Todos></Suspense>
 
